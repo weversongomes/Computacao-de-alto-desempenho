@@ -5,8 +5,6 @@
 #include <sys/time.h>
 #include <omp.h>
 
-double startTime, finalTime;
-time_t timer1, timer2;
 char buffer1[25], buffer2[25];
 struct tm* tm_info;
 
@@ -51,13 +49,6 @@ int main(int argc, char *argv[]) {
     //otimizacao ----------------------
     ww = w*w;
 
-    //---------------------------------
-    //Start time
-    time(&timer1);
-    tm_info = localtime(&timer1);
-    strftime(buffer1, 25, "%d/%m/%Y %H:%M:%S", tm_info);
-    startTime = getRealTime();
-
 	int Tmax = 86400;
 	int NPI; // numero de posicoes iniciais
 	if (argv[1] != NULL && atoi(argv[1]) >= 1) {
@@ -77,10 +68,10 @@ int main(int argc, char *argv[]) {
 		omp_set_num_threads(1);
 		printf("Utilizando 1 nucleo.\n");
 	}
-    FILE *arq, *out;
+    FILE *arq;
     char url[] = "in.dat";
     arq = fopen(url, "r");
-    out = fopen("parallel-out.txt", "w");
+    //out = fopen("parallel-out.txt", "w");
     double var1;
 	double done = 0; // usada para mostrar o percentual calculado
 
@@ -190,14 +181,14 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-    time(&timer2);
+    /*time(&timer2);
     tm_info = localtime(&timer2);
     strftime(buffer2, 25, "%d/%m/%Y %H:%M:%S", tm_info);
     
     finalTime = getRealTime();
 
     fprintf(out,"\nTempo de execucao: %f segundos\n",finalTime-startTime);
-    fclose(out);
+    fclose(out);*/
 
 	return 0;
 }
